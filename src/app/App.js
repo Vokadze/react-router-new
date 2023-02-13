@@ -3,17 +3,17 @@ import { Route, Switch } from 'react-router-dom'
 import Navbar from './components/navbar'
 import Home from './components/home'
 import SingIn from './components/singin'
-import PostsList from './components/postList'
-import Post from './components/post'
 import Contacts from './components/contacts'
-
-const posts = [
-  { id: 1, title: 'Post 1' },
-  { id: 2, title: 'Post 2' },
-  { id: 3, title: 'Post 3' },
-]
+import Posts from './components/posts'
+//import Post from './components/post'
 
 function App() {
+
+   // Последовательность параметров в URL полученных из CMS
+//const pathConfig = ['year', 'mounth', 'date', 'slug']
+// Паттерн для роута
+//const routePath = "/:" + pathConfig.join('/:') // -> /:year/:mounth/:date/:slug
+
   return (
     <div>
       <Navbar />
@@ -21,13 +21,12 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/singin" component={SingIn} />
-        <Route path="/posts/:postId">
-          {(props) => <Post {...props} posts={posts} />}
-        </Route>
-        <Route path="/posts">
-          {(props) => <PostsList {...props} posts={posts} />}
-        </Route>
+        <Route path="/posts/:postId?" component={Posts} />
         <Route path="/contacts" component={Contacts} />
+        {/*<Route path="/catalog/:category?/subCategoy?">
+          {({ match }) => <pre>{JSON.stringify(match.params)}</pre>}
+        </Route>*/}
+        {/*<Route path={routePath} component={Post} />*/}
       </Switch>
     </div>
   )
