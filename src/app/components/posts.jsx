@@ -3,8 +3,8 @@ import PostList from './postList';
 import Post from './post';
 import qs from "query-string";
 
-const Posts = ({ match, location }) => {
-   const [showOffer, setShowOffer] = useState(true)
+const Posts = ({ match, location, history }) => {
+   const [showOffer, setShowOffer] = useState(false)
    const posts = [
       { id: 1, title: 'Post 1' },
       { id: 2, title: 'Post 2' },
@@ -25,12 +25,23 @@ const Posts = ({ match, location }) => {
    // Логика получения записи перенесена из Post
    const getPost = (postId) => posts.find(({ id }) => String(id) === postId);
 
+   // Создаём функцию для перехода к списку постов
+   // Передаём значение и проверяем есть ли запись. Если нет то заменяем историю
+   const handleMoveToList = (hasPost) => {
+      hasPost ? history.push("/posts") : history.replace("/posts");
+
+   }
+
    // Если есть postId, то возвращаем Post, иначе PostList
    return (
       <>
          {showOffer && <div>Специальное предложение</div>}
          {postId ? (
-            <Post post={getPost(postId)} id={postId} />
+            <Post 
+            goToList={handleMoveToList}
+            post={getPost(postId)} 
+            id={postId} 
+            />
          ) : (
             <PostList posts={posts} />
          )}
